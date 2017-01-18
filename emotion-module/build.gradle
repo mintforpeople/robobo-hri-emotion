@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 2
-        versionName "0.1.1"
+        versionCode 3
+        versionName "0.2.1"
     }
     buildTypes {
         release {
@@ -16,17 +16,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.mytechia:robobo-framework:0.3.5'
-    compile project(':openCVLibrary310')
-    compile 'com.mytechia:robobo-remote-control-module:0.2.0' 
+    compile 'com.mytechia:robobo-remote-control-module:0.2.1'
+    compile 'com.mytechia:opencv:3.10.0'
 }
 
 
 
 
 
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+
+
+afterEvaluate { project ->
+    android.libraryVariants.all { variant ->
+        tasks.androidJavadocs.doFirst {
+            classpath += files(variant.javaCompile.classpath.files)
+        }
+    }
+}
