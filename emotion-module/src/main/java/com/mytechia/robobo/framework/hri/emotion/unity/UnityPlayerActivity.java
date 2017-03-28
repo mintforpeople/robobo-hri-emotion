@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
@@ -28,13 +29,15 @@ import com.unity3d.player.UnityPlayer;
 
 import org.opencv.android.CameraBridgeViewBase;
 
-public class UnityPlayerActivity extends Activity implements IEmotionListener
-{
+public class UnityPlayerActivity extends Activity implements IEmotionListener {
+
 	protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
     protected FrameLayout unitylayout;
     protected FrameLayout flayout;
+	protected FrameLayout touchCapture;
 
-    private RoboboServiceHelper roboboHelper;
+
+	private RoboboServiceHelper roboboHelper;
 
 
 
@@ -47,11 +50,14 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener
 
 
 
+
+
     // Setup activity layout
 	@Override protected void onCreate (Bundle savedInstanceState)
 	{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
+
 
 		getWindow().setFormat(PixelFormat.RGBX_8888); // <--- This makes xperia play happy
 
@@ -59,14 +65,26 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener
 
 		setContentView(R.layout.activity_unity_layout);
         flayout = (FrameLayout) findViewById(R.id.flayoutUnity);
+		touchCapture = (FrameLayout) findViewById(R.id.touchcapture);
         unitylayout = (FrameLayout) findViewById(R.id.unitylayout);
         mUnityPlayer = new UnityPlayer(UnityPlayerActivity.this);
         unitylayout.addView(mUnityPlayer.getView());
 		//setContentView(mUnityPlayer);
 		mUnityPlayer.requestFocus();
 
+
+
 		cameraBridge = (CameraBridgeViewBase) findViewById(R.id.HelloOpenCvViewUnity) ;
 
+
+		touchCapture.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View view, MotionEvent motionEvent) {
+				Log.d("WebGlActivity","EVENT");
+				emotionModule.notifyTouchEvent(motionEvent);
+				return false;
+			}
+		});
 		this.roboboHelper = new RoboboServiceHelper(this, new RoboboServiceHelper.Listener() {
             @Override
             public void onRoboboManagerStarted(RoboboManager roboboManager) {
@@ -138,20 +156,12 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener
 		mUnityPlayer.windowFocusChanged(hasFocus);
 	}
 
-	// For some reason the multiple keyevent type is not supported by the ndk.
-	// Force event injection by overriding dispatchKeyEvent().
-	@Override public boolean dispatchKeyEvent(KeyEvent event)
-	{
-		if (event.getAction() == KeyEvent.ACTION_MULTIPLE)
-			return mUnityPlayer.injectEvent(event);
-		return super.dispatchKeyEvent(event);
-	}
 
-	// Pass any events not handled by (unfocused) views straight to UnityPlayer
-	@Override public boolean onKeyUp(int keyCode, KeyEvent event)     { return mUnityPlayer.injectEvent(event); }
-	@Override public boolean onKeyDown(int keyCode, KeyEvent event)   { return mUnityPlayer.injectEvent(event); }
-	@Override public boolean onTouchEvent(MotionEvent event)          { return mUnityPlayer.injectEvent(event); }
-	/*API12*/ public boolean onGenericMotionEvent(MotionEvent event)  { return mUnityPlayer.injectEvent(event); }
+
+
+
+
+
 
 	@Override
 	public void newEmotion(Emotion emotion) {

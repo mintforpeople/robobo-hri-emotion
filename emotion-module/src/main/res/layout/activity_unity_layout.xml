@@ -11,25 +11,31 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/unitylayout">
+        android:id="@+id/touchcapture">
 
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:rotation="0"
-        android:id="@+id/flayoutUnity">
-
-        <org.opencv.android.JavaCameraView
-            android:visibility="visible"
-            android:id="@+id/HelloOpenCvViewUnity"
-            opencv:show_fps="true"
-            app:camera_id="front"
-            android:layout_alignParentTop="true"
-            android:layout_height="720dp"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:alpha="0" />
+            android:layout_height="match_parent"
+            android:id="@+id/unitylayout">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:rotation="0"
+            android:id="@+id/flayoutUnity">
+
+            <org.opencv.android.JavaCameraView
+                android:visibility="visible"
+                android:id="@+id/HelloOpenCvViewUnity"
+                opencv:show_fps="true"
+                app:camera_id="front"
+                android:layout_alignParentTop="true"
+                android:layout_height="720dp"
+                android:layout_width="match_parent"
+                android:alpha="0" />
+        </FrameLayout>
     </FrameLayout>
 
 </LinearLayout>
