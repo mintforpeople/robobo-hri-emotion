@@ -42,6 +42,7 @@ public class DefaultEmotionModule implements IEmotionModule {
     private ArrayList<ITouchEventListener> touchlisteners = new ArrayList<>();
     private Emotion currentEmotion;
     private CameraBridgeViewBase cameraBridge;
+    protected RoboboManager m;
 
 
     public DefaultEmotionModule() { }
@@ -50,7 +51,7 @@ public class DefaultEmotionModule implements IEmotionModule {
 
     @Override
     public void startup(RoboboManager manager) throws InternalErrorException {
-
+        m= manager;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class DefaultEmotionModule implements IEmotionModule {
 
     @Override
     public String getModuleVersion() {
-        return "0.1";
+        return "0.3.0";
     }
 
 
