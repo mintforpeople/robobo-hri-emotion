@@ -1,3 +1,25 @@
+/*******************************************************************************
+ *
+ *   Copyright 2017 Mytech Ingenieria Aplicada <http://www.mytechia.com>
+ *   Copyright 2017 Luis Llamas <luis.llamas@mytechia.com>
+ *
+ *   This file is part of Robobo Emotion Module.
+ *
+ *   Robobo Emotion Module is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Lesser General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   Robobo Emotion Module is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public License
+ *   along with Robobo Emotion Module.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ ******************************************************************************/
+
 package com.mytechia.robobo.framework.hri.emotion.unity;
 
 import android.app.Activity;
@@ -11,6 +33,9 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+
+import com.mytechia.robobo.framework.LogLvl;
 import com.unity3d.player.*;
 
 
@@ -34,7 +59,7 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
 	protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
     protected FrameLayout unitylayout;
     protected FrameLayout flayout;
-	protected FrameLayout touchCapture;
+	protected LinearLayout touchCapture;
 
 
 	private RoboboServiceHelper roboboHelper;
@@ -65,26 +90,37 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
 
 		setContentView(R.layout.activity_unity_layout);
         flayout = (FrameLayout) findViewById(R.id.flayoutUnity);
-		touchCapture = (FrameLayout) findViewById(R.id.touchcapture);
+		touchCapture = (LinearLayout) findViewById(R.id.mainlayout);
         unitylayout = (FrameLayout) findViewById(R.id.unitylayout);
         mUnityPlayer = new UnityPlayer(UnityPlayerActivity.this);
         unitylayout.addView(mUnityPlayer.getView());
 		//setContentView(mUnityPlayer);
 		mUnityPlayer.requestFocus();
+        mUnityPlayer.getView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.d("WebGlActivity","EVENT");
+				emotionModule.notifyTouchEvent(motionEvent);
+				return false;
+            }
+        });
 
 
 
 		cameraBridge = (CameraBridgeViewBase) findViewById(R.id.HelloOpenCvViewUnity) ;
 
+//
+//		cameraBridge.setOnTouchListener(new View.OnTouchListener() {
+//
+//			@Override
+//			public boolean onTouch(View view, MotionEvent motionEvent) {
+//				Log.d("WebGlActivity","EVENT");
+//				emotionModule.notifyTouchEvent(motionEvent);
+//				return false;
+//			}
+//		});
 
-		touchCapture.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View view, MotionEvent motionEvent) {
-				Log.d("WebGlActivity","EVENT");
-				emotionModule.notifyTouchEvent(motionEvent);
-				return false;
-			}
-		});
+
 		this.roboboHelper = new RoboboServiceHelper(this, new RoboboServiceHelper.Listener() {
             @Override
             public void onRoboboManagerStarted(RoboboManager roboboManager) {
@@ -95,7 +131,7 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
                     emotionModule.subscribe(UnityPlayerActivity.this);
 					emotionModule.setCameraBridgeView(cameraBridge);
                 } catch(ModuleNotFoundException ex) {
-                    Log.e("EMOTION-UNITY", ex.getMessage());
+                    roboboManager.log(LogLvl.ERROR, "EMOTION-UNITY", ex.getMessage());
                 }
 
 
@@ -159,8 +195,14 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
 
 
 
-
-
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//
+//        Log.d("UnityActivity","EVENT");
+//        emotionModule.notifyTouchEvent(event);
+//        return super.onTouchEvent(event);
+//    }
+//
 
 
 	@Override
@@ -195,4 +237,5 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
 				break;
 		}
 	}
+
 }

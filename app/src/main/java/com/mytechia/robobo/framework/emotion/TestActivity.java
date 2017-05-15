@@ -13,6 +13,8 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        Intent myIntent = new Intent(this,UnityPlayerActivity.class);
+        this.startActivity(myIntent);
 
     }
 }
