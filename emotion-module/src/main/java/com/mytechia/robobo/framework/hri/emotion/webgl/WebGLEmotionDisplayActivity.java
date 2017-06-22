@@ -176,6 +176,7 @@ public class WebGLEmotionDisplayActivity extends Activity implements IEmotionLis
                     case SURPRISED: myWebView.loadUrl("javascript:emotionSurprised()"); break;
                     case SMYLING: myWebView.loadUrl("javascript:emotionSmyling()"); break;
                     case IN_LOVE: myWebView.loadUrl("javascript:emotionInLove()"); break;
+                    case SLEEPING: myWebView.loadUrl("javascript:emotionNormal()"); break;
                 }
 
             }

@@ -49,7 +49,9 @@ public interface IEmotionModule extends IModule {
     public void unsubscribeTouchListener(ITouchEventListener listener);
 
     public CameraBridgeViewBase getCameraBridgeView();
+
     public void setCameraBridgeView(CameraBridgeViewBase viewBase);
+
 
 
 }

@@ -23,6 +23,7 @@
 package com.mytechia.robobo.framework.hri.emotion.unity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -55,6 +56,14 @@ import com.unity3d.player.UnityPlayer;
 import org.opencv.android.CameraBridgeViewBase;
 
 public class UnityPlayerActivity extends Activity implements IEmotionListener {
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if( intent.getBooleanExtra("finish",false) ){
+//			finish();
+			this.onBackPressed();
+		}
+		super.onNewIntent(intent);
+	}
 
 	protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
     protected FrameLayout unitylayout;
@@ -167,7 +176,6 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
 	@Override protected void onPause()
 	{
 		super.onPause();
-		mUnityPlayer.UnitySendMessage("roboboFace","msgFace","angry");
 		mUnityPlayer.pause();
 	}
 
@@ -235,7 +243,12 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
 			case NORMAL:
 				mUnityPlayer.UnitySendMessage("roboboFace","msgFace","normal");
 				break;
+			case SLEEPING:
+				mUnityPlayer.UnitySendMessage("roboboFace","msgFace","sleeping");
+				break;
 		}
 	}
+
+
 
 }
