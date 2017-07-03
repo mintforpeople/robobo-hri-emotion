@@ -37,6 +37,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.mytechia.robobo.framework.LogLvl;
+import com.mytechia.robobo.framework.remote_control.remotemodule.Status;
 import com.unity3d.player.*;
 
 
@@ -69,6 +70,7 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
     protected FrameLayout unitylayout;
     protected FrameLayout flayout;
 	protected LinearLayout touchCapture;
+
 
 
 	private RoboboServiceHelper roboboHelper;
@@ -149,6 +151,9 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
                         @Override
                         public void executeCommand(Command c, IRemoteControlModule rcmodule) {
                             mUnityPlayer.UnitySendMessage("roboboFace","msgFace",c.getParameters().get("emotion"));
+							Status s = new Status("EMOTIONSTATUS");
+							s.putContents("emotion", c.getParameters().get("emotion"));
+							rcmodule.postStatus(s);
 
                         }
                     });
@@ -215,6 +220,9 @@ public class UnityPlayerActivity extends Activity implements IEmotionListener {
 
 	@Override
 	public void newEmotion(Emotion emotion) {
+
+
+
 		switch (emotion){
 			case HAPPY:
 				mUnityPlayer.UnitySendMessage("roboboFace","msgFace","happy");
