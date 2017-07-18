@@ -34,6 +34,7 @@ public enum Emotion {
     EMBARRASED,
     SURPRISED,
     IN_LOVE,
-    NORMAL
+    NORMAL,
+    SLEEPING;
 
 }
