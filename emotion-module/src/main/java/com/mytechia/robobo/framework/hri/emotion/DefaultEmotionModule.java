@@ -25,6 +25,9 @@ import android.view.MotionEvent;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.robobo.framework.RoboboManager;
+import com.mytechia.robobo.framework.exception.ModuleNotFoundException;
+import com.mytechia.robobo.framework.remote_control.remotemodule.Command;
+import com.mytechia.robobo.framework.remote_control.remotemodule.ICommandExecutor;
 import com.mytechia.robobo.framework.remote_control.remotemodule.IRemoteControlModule;
 import com.mytechia.robobo.framework.remote_control.remotemodule.Status;
 
@@ -56,6 +59,19 @@ public class DefaultEmotionModule implements IEmotionModule {
     public void startup(RoboboManager manager) throws InternalErrorException {
         m= manager;
         rcmodule = m.getModuleInstance(IRemoteControlModule.class);
+
+            rcmodule.registerCommand("CHANGEEMOTION", new ICommandExecutor() {
+                @Override
+                public void executeCommand(Command c, IRemoteControlModule rcmodule) {
+
+                    setCurrentEmotion(Emotion.fromString(c.getParameters().get("emotion")));
+                    Status s = new Status("EMOTIONSTATUS");
+                    s.putContents("emotion", c.getParameters().get("emotion"));
+                    rcmodule.postStatus(s);
+
+                }
+            });
+
     }
 
     @Override
@@ -151,6 +167,11 @@ public class DefaultEmotionModule implements IEmotionModule {
         public void run() {
 
             setCurrentEmotion(next);
+            Status s = new Status("EMOTIONSTATUS");
+
+            s.putContents("emotion", next.toString());
+
+            rcmodule.postStatus(s);
 
         }
 

@@ -37,4 +37,33 @@ public enum Emotion {
     NORMAL,
     SLEEPING;
 
+    @Override
+    public String toString() {
+        return this.name().toLowerCase();
+    }
+
+    public static Emotion fromString(String s){
+        switch (s){
+            case "happy":
+                return Emotion.HAPPY;
+                
+            case "laughting":
+                return Emotion.LAUGHING;
+                
+            case "sad":
+                return Emotion.SAD;
+                
+            case "angry":
+                return Emotion.ANGRY;
+                
+            case "surprised":
+                return Emotion.SURPRISED;
+                
+            case "normal":
+                return Emotion.NORMAL;
+                
+            default:
+                return  null;
+        }
+    }
 }
