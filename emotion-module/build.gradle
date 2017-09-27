@@ -30,7 +30,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.mytechia:robobo-framework:1.0.0'
-    compile files('libs/unity-classes.jar')
 
     compile 'com.mytechia:robobo-remote-control-module:0.3.0'
     compile 'com.mytechia:opencv:3.1.0-r2-my'
