@@ -26,6 +26,8 @@ import android.view.MotionEvent;
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.robobo.framework.RoboboManager;
 import com.mytechia.robobo.framework.exception.ModuleNotFoundException;
+import com.mytechia.robobo.framework.power.IPowerModeListener;
+import com.mytechia.robobo.framework.power.PowerMode;
 import com.mytechia.robobo.framework.remote_control.remotemodule.Command;
 import com.mytechia.robobo.framework.remote_control.remotemodule.ICommandExecutor;
 import com.mytechia.robobo.framework.remote_control.remotemodule.IRemoteControlModule;
@@ -41,7 +43,7 @@ import java.util.TimerTask;
 /** A naive implementation of the emotion module that manages the changes of the
  * emotion and the notification to the listeners.
  */
-public class DefaultEmotionModule implements IEmotionModule {
+public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener {
 
     private ArrayList<IEmotionListener> listeners = new ArrayList<>();
     private ArrayList<ITouchEventListener> touchlisteners = new ArrayList<>();
@@ -54,10 +56,23 @@ public class DefaultEmotionModule implements IEmotionModule {
     public DefaultEmotionModule() { }
 
 
+    @Override
+    public void onPowerModeChange(PowerMode newMode) {
+        if (newMode == PowerMode.LOWPOWER) {
+            setCurrentEmotion(Emotion.SAD);
+        }
+        else {
+            setCurrentEmotion(Emotion.NORMAL);
+        }
+    }
+
 
     @Override
     public void startup(RoboboManager manager) throws InternalErrorException {
         m= manager;
+
+        manager.subscribeToPowerModeChanges(this);
+
         rcmodule = m.getModuleInstance(IRemoteControlModule.class);
 
             rcmodule.registerCommand("CHANGEEMOTION", new ICommandExecutor() {
