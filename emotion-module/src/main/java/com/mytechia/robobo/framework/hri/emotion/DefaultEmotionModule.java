@@ -64,7 +64,7 @@ public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener 
     @Override
     public void onPowerModeChange(PowerMode newMode) {
         if (newMode == PowerMode.LOWPOWER) {
-            setCurrentEmotion(Emotion.SAD);
+            setCurrentEmotion(Emotion.SLEEPING);
         }
         else {
             setCurrentEmotion(Emotion.NORMAL);
