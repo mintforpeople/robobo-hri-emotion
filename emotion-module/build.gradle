@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 15
+        versionCode 16
         versionName "1.0.0-SNAPSHOT"
     }
     buildTypes {

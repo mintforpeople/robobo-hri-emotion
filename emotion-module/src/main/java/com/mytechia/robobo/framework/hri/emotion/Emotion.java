@@ -31,7 +31,7 @@ public enum Emotion {
     ANGRY,
     SMYLING,
     LAUGHING,
-    EMBARRASED,
+    EMBARRASSED,
     SURPRISED,
     IN_LOVE,
     NORMAL,
@@ -47,7 +47,7 @@ public enum Emotion {
             case "happy":
                 return Emotion.HAPPY;
                 
-            case "laughting":
+            case "laughing":
                 return Emotion.LAUGHING;
                 
             case "sad":
@@ -61,6 +61,15 @@ public enum Emotion {
                 
             case "normal":
                 return Emotion.NORMAL;
+
+            case "sleeping":
+                return Emotion.SLEEPING;
+
+            case "embarrassed":
+                return Emotion.EMBARRASSED;
+
+            case "inlove":
+                return Emotion.IN_LOVE;
                 
             default:
                 return  null;
