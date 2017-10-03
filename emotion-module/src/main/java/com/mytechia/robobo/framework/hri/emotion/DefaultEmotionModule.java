@@ -56,6 +56,11 @@ public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener 
     public DefaultEmotionModule() { }
 
 
+    /** Change the emotion of the robot when the robot goes
+     * to low power mode (sleep) or to normal (normal face)
+     *
+     * @param newMode new power mode
+     */
     @Override
     public void onPowerModeChange(PowerMode newMode) {
         if (newMode == PowerMode.LOWPOWER) {
@@ -75,17 +80,18 @@ public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener 
 
         rcmodule = m.getModuleInstance(IRemoteControlModule.class);
 
-            rcmodule.registerCommand("CHANGEEMOTION", new ICommandExecutor() {
-                @Override
-                public void executeCommand(Command c, IRemoteControlModule rcmodule) {
+        //register a new REMOTE COMMAND to allow chaging the emotion remotelly
+        rcmodule.registerCommand("CHANGEEMOTION", new ICommandExecutor() {
+            @Override
+            public void executeCommand(Command c, IRemoteControlModule rcmodule) {
 
-                    setCurrentEmotion(Emotion.fromString(c.getParameters().get("emotion")));
-                    Status s = new Status("EMOTIONSTATUS");
-                    s.putContents("emotion", c.getParameters().get("emotion"));
-                    rcmodule.postStatus(s);
+                setCurrentEmotion(Emotion.fromString(c.getParameters().get("emotion")));
+                Status s = new Status("EMOTIONSTATUS");
+                s.putContents("emotion", c.getParameters().get("emotion"));
+                rcmodule.postStatus(s);
 
-                }
-            });
+            }
+        });
 
     }
 
@@ -101,7 +107,7 @@ public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener 
 
     @Override
     public String getModuleVersion() {
-        return "0.3.0";
+        return "1.0.0";
     }
 
 
