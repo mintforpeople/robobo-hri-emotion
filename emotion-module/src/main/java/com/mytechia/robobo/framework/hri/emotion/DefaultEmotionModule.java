@@ -81,12 +81,12 @@ public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener 
         rcmodule = m.getModuleInstance(IRemoteControlModule.class);
 
         //register a new REMOTE COMMAND to allow chaging the emotion remotelly
-        rcmodule.registerCommand("CHANGEEMOTION", new ICommandExecutor() {
+        rcmodule.registerCommand("SET-EMOTION", new ICommandExecutor() {
             @Override
             public void executeCommand(Command c, IRemoteControlModule rcmodule) {
 
                 setCurrentEmotion(Emotion.fromString(c.getParameters().get("emotion")));
-                Status s = new Status("EMOTIONSTATUS");
+                Status s = new Status("EMOTION");
                 s.putContents("emotion", c.getParameters().get("emotion"));
                 rcmodule.postStatus(s);
 
@@ -188,7 +188,7 @@ public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener 
         public void run() {
 
             setCurrentEmotion(next);
-            Status s = new Status("EMOTIONSTATUS");
+            Status s = new Status("EMOTION");
 
             s.putContents("emotion", next.toString());
 
