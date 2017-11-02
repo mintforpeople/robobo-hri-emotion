@@ -31,10 +31,48 @@ public enum Emotion {
     ANGRY,
     SMYLING,
     LAUGHING,
-    EMBARRASED,
+    EMBARRASSED,
     SURPRISED,
     IN_LOVE,
     NORMAL,
     SLEEPING;
 
+    @Override
+    public String toString() {
+        return this.name().toLowerCase();
+    }
+
+    public static Emotion fromString(String s){
+        switch (s){
+            case "happy":
+                return Emotion.HAPPY;
+                
+            case "laughing":
+                return Emotion.LAUGHING;
+                
+            case "sad":
+                return Emotion.SAD;
+                
+            case "angry":
+                return Emotion.ANGRY;
+                
+            case "surprised":
+                return Emotion.SURPRISED;
+                
+            case "normal":
+                return Emotion.NORMAL;
+
+            case "sleeping":
+                return Emotion.SLEEPING;
+
+            case "embarrassed":
+                return Emotion.EMBARRASSED;
+
+            case "inlove":
+                return Emotion.IN_LOVE;
+                
+            default:
+                return  null;
+        }
+    }
 }
