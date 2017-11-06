@@ -35,7 +35,9 @@ public enum Emotion {
     SURPRISED,
     IN_LOVE,
     NORMAL,
-    SLEEPING;
+    SLEEPING,
+    TIRED,
+    AFRAID;
 
     @Override
     public String toString() {
@@ -70,6 +72,12 @@ public enum Emotion {
 
             case "inlove":
                 return Emotion.IN_LOVE;
+
+            case "tired":
+                return Emotion.TIRED;
+
+            case "afraid":
+                return Emotion.AFRAID;
                 
             default:
                 return  null;
