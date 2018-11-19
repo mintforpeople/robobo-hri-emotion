@@ -22,7 +22,7 @@
 
 package com.mytechia.robobo.framework.hri.emotion;
 
-/** Enumeration of support Robobo emotions
+/** Enumeration of supported Robobo emotions
  */
 public enum Emotion {
 
