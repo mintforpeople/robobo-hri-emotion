@@ -2,11 +2,28 @@
 
 buildscript {
     repositories {
+
         google()
-        jcenter()
+
+        mavenLocal()
+
+        mavenCentral()
+
+
+        maven {
+            url "http://10.113.36.13:8083/nexus/repository/snapshots/"
+            allowInsecureProtocol=true
+        }
+
+        maven {
+            url "http://10.113.36.13:8083/nexus/repository/releases/"
+            allowInsecureProtocol=true
+        }
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.12.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -14,16 +31,38 @@ buildscript {
 }
 
 allprojects {
+
     repositories {
-        jcenter()
+        mavenLocal()
         mavenCentral()
+
         maven {
-            url "http://192.168.0.5:7080/nexus/content/repositories/snapshots/"
+            url "http://10.113.36.13:8083/nexus/repository/snapshots/"
+            allowInsecureProtocol=true
         }
 
+        maven {
+            url "http://10.113.36.13:8083/nexus/repository/releases/"
+            allowInsecureProtocol=true
+        }
+
+        maven {
+            url "https://jitpack.io"
+        }
+
+        maven{
+            url  'http://www.sparetimelabs.com/maven2'
+            allowInsecureProtocol=true
+        }
+        flatDir {
+            dirs 'libs'
+        }
+
+        google()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+

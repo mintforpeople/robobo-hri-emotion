@@ -33,8 +33,6 @@ import com.mytechia.robobo.framework.remote_control.remotemodule.ICommandExecuto
 import com.mytechia.robobo.framework.remote_control.remotemodule.IRemoteControlModule;
 import com.mytechia.robobo.framework.remote_control.remotemodule.Status;
 
-import org.opencv.android.CameraBridgeViewBase;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
@@ -48,7 +46,6 @@ public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener 
     private ArrayList<IEmotionListener> listeners = new ArrayList<>();
     private ArrayList<ITouchEventListener> touchlisteners = new ArrayList<>();
     private Emotion currentEmotion;
-    private CameraBridgeViewBase cameraBridge;
     protected RoboboManager m;
     private IRemoteControlModule rcmodule;
 
@@ -134,16 +131,6 @@ public class DefaultEmotionModule implements IEmotionModule, IPowerModeListener 
 
     public void unsubscribeTouchListener(ITouchEventListener listener) {
         this.touchlisteners.remove(listener);
-    }
-
-    @Override
-    public CameraBridgeViewBase getCameraBridgeView() {
-        return cameraBridge;
-    }
-
-    @Override
-    public void setCameraBridgeView(CameraBridgeViewBase viewBase) {
-        cameraBridge = viewBase;
     }
 
 

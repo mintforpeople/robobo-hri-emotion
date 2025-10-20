@@ -24,7 +24,7 @@ package com.mytechia.robobo.framework.hri.emotion;
 
 import com.mytechia.robobo.framework.IModule;
 
-import org.opencv.android.CameraBridgeViewBase;
+//import org.opencv.android.CameraBridgeViewBase;
 
 /** Default interface of the a Robobo emotion module.
  */
@@ -48,9 +48,9 @@ public interface IEmotionModule extends IModule {
 
     public void unsubscribeTouchListener(ITouchEventListener listener);
 
-    public CameraBridgeViewBase getCameraBridgeView();
+    //public CameraBridgeViewBase getCameraBridgeView();
 
-    public void setCameraBridgeView(CameraBridgeViewBase viewBase);
+    //public void setCameraBridgeView(CameraBridgeViewBase viewBase);
 
 
 
